@@ -1,7 +1,10 @@
 import{collection,addDoc,getDocs,query,orderBy,onSnapshot} from "firebase/firestore"
 import React,{useEffect, useState} from "react";
-import {dbService} from 'fbase.js';
+import { v4 as uuidv4 } from 'uuid';
+import {dbService, authService,storageService} from 'fbase.js';
 import Nweets from "component/Nweet"
+import { ref, uploadString } from "@firebase/storage";
+
 
 const Home =({userObj})=> {
   console.log(userObj);
@@ -25,12 +28,15 @@ const Home =({userObj})=> {
    
     const onSubmit= async(event)=>{
       event.preventDefault()
-      await addDoc(collection(dbService, "nweets"), {
-        text :nweet,
-        createdAt: Date.now(),
-        creatorId:userObj.uid,
-        });
-        setNweet("");
+      const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`)
+      const response = await uploadString(fileRef, attachment, "data_url");
+      console.log(response);
+      // await addDoc(collection(dbService, "nweets"), {
+      //   text :nweet,
+      //   createdAt: Date.now(),
+      //   creatorId:userObj.uid,
+      //   });
+      //   setNweet("");
         };
     const onChange=(event)=>{
       const {
