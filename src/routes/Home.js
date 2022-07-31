@@ -31,14 +31,14 @@ const Home =({userObj})=> {
       let attachmentUrl=""
       if(attachment !==""){
         const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`)
-      const response = await uploadString(fileRef, attachment, "data_url");
+        const response = await uploadString(fileRef, attachment, "data_url");
        attachmentUrl = await getDownloadURL(response.ref)
       }
       const nweetObj ={
         text :nweet,
         createdAt: Date.now(),
         creatorId:userObj.uid,
-        attachmentUrl
+        attachmentUrl,
       }
       
       await addDoc(collection(dbService, "nweets"),nweetObj);
@@ -62,7 +62,9 @@ const Home =({userObj})=> {
    }
     reader.readAsDataURL(theFile);
     }
-    const onClearAttachment=()=> setAttachment(null)
+    const onClearAttachment=()=> {
+      setAttachment("")
+    }
     return( 
         <div>
             <form onSubmit={onSubmit}>
