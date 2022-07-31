@@ -3,7 +3,7 @@ import React,{useEffect, useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import {dbService, authService,storageService} from 'fbase.js';
 import Nweets from "component/Nweet"
-import { ref, uploadString } from "@firebase/storage";
+import { ref, uploadString ,getDownloadURL} from "@firebase/storage";
 
 
 const Home =({userObj})=> {
@@ -28,15 +28,22 @@ const Home =({userObj})=> {
    
     const onSubmit= async(event)=>{
       event.preventDefault()
-      const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`)
+      let attachmentUrl=""
+      if(attachment !==""){
+        const fileRef = ref(storageService, `${userObj.uid}/${uuidv4()}`)
       const response = await uploadString(fileRef, attachment, "data_url");
-      console.log(response);
-      // await addDoc(collection(dbService, "nweets"), {
-      //   text :nweet,
-      //   createdAt: Date.now(),
-      //   creatorId:userObj.uid,
-      //   });
-      //   setNweet("");
+       attachmentUrl = await getDownloadURL(response.ref)
+      }
+      const nweetObj ={
+        text :nweet,
+        createdAt: Date.now(),
+        creatorId:userObj.uid,
+        attachmentUrl
+      }
+      
+      await addDoc(collection(dbService, "nweets"),nweetObj);
+        setNweet("");
+        setAttachment("")
         };
     const onChange=(event)=>{
       const {
