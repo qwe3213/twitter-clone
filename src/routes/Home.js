@@ -10,7 +10,7 @@ const Home =({userObj})=> {
   console.log(userObj);
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
-  const [attachment,setAttachment] =useState();
+  const [attachment,setAttachment] =useState("");
     useEffect(() => {
     const q = query(
       collection(dbService, "nweets"),

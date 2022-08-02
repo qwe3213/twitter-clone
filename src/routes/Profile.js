@@ -1,12 +1,24 @@
-import { authService } from "fbase";
-import React from "react";
+import { authService, dbService } from "fbase";
+import React, { useEffect } from "react";
+import { collection, where, query ,orderBy ,getDocs} from "firebase/firestore";
 
 
-export default ()=> {
+const Profile=({ userObj })=> {
     
     const onLogOutClick=()=>{
         authService.signOut();  
     }
+    const getMyNweets = async()=>{
+        console.log(userObj);
+         const q =query(collection(dbService,"nweets"),where("creatorId", "==", userObj.uid),orderBy("createdAt","desc"))
+         const querySnapshot = await getDocs(q);
+         querySnapshot.forEach((doc) => {
+        console.log(doc.id, "=>", doc.data());
+        });
+        };
+    useEffect(()=>{
+     getMyNweets();
+    },)
     
     return (
         <>
@@ -14,3 +26,4 @@ export default ()=> {
         </>
     )
 }
+export default Profile;
