@@ -5,7 +5,7 @@ import { async } from "@firebase/util";
 import {getAuth,updateProfile} from "firebase/auth"
 
 
-const Profile=({ userObj })=> {
+const Profile=({ refreshUser,userObj })=> {
     const [newDisplayName,setNewDispaly]=useState(userObj.displayName)
     const onLogOutClick=()=>{
         authService.signOut();  
@@ -30,7 +30,7 @@ const Profile=({ userObj })=> {
         //4. 내 nweets 얻는 function 호출
         useEffect(() => {
             getMyNweets()
-        }, );
+        }, []);
         const onChange =(event)=>{
             const {
                   target:{value},
@@ -44,6 +44,7 @@ const Profile=({ userObj })=> {
               if (userObj.displayName !== newDisplayName) {
                 await updateProfile(authService.currentUser, { displayName: newDisplayName });
                 }
+                refreshUser();
           }
     return (
         <>
