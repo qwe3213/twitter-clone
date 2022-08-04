@@ -9,6 +9,7 @@ const Profile=({ refreshUser,userObj })=> {
     const [newDisplayName,setNewDispaly]=useState(userObj.displayName)
     const onLogOutClick=()=>{
         authService.signOut();  
+       
     }
 
     const getMyNweets = async () => {
