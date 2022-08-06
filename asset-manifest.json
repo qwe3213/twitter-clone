@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/qwe3213/twitter-clone.git/static/css/main.ff37f1a6.css",
+    "main.js": "/qwe3213/twitter-clone.git/static/js/main.c975a7d1.js",
+    "index.html": "/qwe3213/twitter-clone.git/index.html",
+    "main.ff37f1a6.css.map": "/qwe3213/twitter-clone.git/static/css/main.ff37f1a6.css.map",
+    "main.c975a7d1.js.map": "/qwe3213/twitter-clone.git/static/js/main.c975a7d1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ff37f1a6.css",
+    "static/js/main.c975a7d1.js"
+  ]
+}
